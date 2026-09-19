@@ -1,8 +1,9 @@
+package IT_HelpDeskRequest;
 import java.util.Scanner;
 
 public class HelpDeskQueue {
 	// ---------- Queue ----------
-	private static String[] queue = new String[5];
+	private static String[] queue = new String[]{"A", "B", "C", "D", "E"};
 	private static int front = 0;
 	private static int rear = 0;
 	private static int size = 0;
@@ -28,16 +29,33 @@ public class HelpDeskQueue {
 	}
 
 	static String peek() {
-		// ToDo: implement
-		return null;
+		if (!isEmpty()) {
+			return "Queue is not empty";
+		}
+
+		return "Queue is empty";
 	}
 
 	static void displayQueue() {
-		// ToDo: implement
+		String currentQueue = "";
+
+		for(String i: queue) {
+			currentQueue += i;
+		}
+
+		System.out.println("Current Order of the Queue " + currentQueue);
 	}
 
 	static void displayInfo() {
-		// ToDo: implement
+		if (isEmpty() == true) {
+			System.out.println("Queue is empty");
+		}
+
+		for(int i = 0; i < queue.length; i++) {
+			System.out.println("Number " + (i + 1) + ". " + queue[front]);
+
+			front = (front + 1) % queue.length;
+		}
 	}
 
 	// ---------- Main Class ----------
@@ -54,7 +72,7 @@ public class HelpDeskQueue {
 			System.out.println("1. Add Service Request\n" + "2. Process Next Request\n" + "3. View Next Request\n"
 					+ "4. Display Waiting Requests\n" + "5. Display Queue Information\n" + "6. Exit");
 
-			System.out.println("Enter Option: ");
+			System.out.print("Enter Option: ");
 			choice = sc.nextInt();
 			sc.nextLine();
 
@@ -64,11 +82,14 @@ public class HelpDeskQueue {
 			case 2:
 				/* dequeue */ break;
 			case 3:
-				/* peek */ break;
+				System.out.println(HelpDeskQueue.peek());
+				break;
 			case 4:
-				/* displayQueue */ break;
+				HelpDeskQueue.displayQueue();
+				break;
 			case 5:
-				/* displayInfo */ break;
+				HelpDeskQueue.displayInfo();
+				break;
 			case 6:
 				System.out.println("Exit Program");
 				running = false;
