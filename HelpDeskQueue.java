@@ -81,7 +81,7 @@ public class HelpDeskQueue {
 		System.out.println("================================");
 
 		while (running) {
-			System.out.println("1. Add Service Request\n" + "2. Process Next Request\n" + "3. View Next Request\n"
+			System.out.println("----- Choose Option ----- " + "1. Add Service Request\n" + "2. Process Next Request\n" + "3. View Next Request\n"
 					+ "4. Display Waiting Requests\n" + "5. Display Queue Information\n" + "6. Exit");
 
 			System.out.print("Enter Option: ");
