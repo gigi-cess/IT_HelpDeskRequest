@@ -1,3 +1,4 @@
+package IT_HelpDeskRequest;
 import java.util.Scanner;
 
 public class HelpDeskQueue {
@@ -28,16 +29,33 @@ public class HelpDeskQueue {
 	}
 
 	static String peek() {
-		// ToDo: implement
-		return null;
+		if (isEmpty() == true) {
+			return null;
+		}
+
+		return queue[front];
 	}
 
 	static void displayQueue() {
-		// ToDo: implement
+		String currentQueue = "";
+
+		for(int i = 0; i < queue.length; i++) {
+			currentQueue += queue[i];
+			front = (front + 1) % queue.length;
+		}
+
+		System.out.println("Current Requests: " + currentQueue);
 	}
 
 	static void displayInfo() {
-		// ToDo: implement
+		if (isEmpty() == true) {
+			System.out.println("Queue is empty");
+		}
+
+		for(int i = 0; i < queue.length; i++) {
+			System.out.println("No. " + (i + 1) + " in the queue: " + queue[front]);
+			front = (front + 1) % queue.length;
+		}
 	}
 
 	// ---------- Main Class ----------
@@ -51,30 +69,50 @@ public class HelpDeskQueue {
 		System.out.println("================================");
 
 		while (running) {
-			System.out.println("1. Add Service Request\n" + "2. Process Next Request\n" + "3. View Next Request\n"
-					+ "4. Display Waiting Requests\n" + "5. Display Queue Information\n" + "6. Exit");
+			System.out.println(
+				"1. Add Service Request\n" + 	   
+				"2. Process Next Request\n" + 
+				"3. View Next Request\n" + 
+				"4. Display Waiting Requests\n" + 
+				"5. Display Queue Information\n" + 
+				"6. Exit"
+			);
 
-			System.out.println("Enter Option: ");
+			System.out.print("Enter Option: ");
 			choice = sc.nextInt();
 			sc.nextLine();
 
-			switch (choice) {
-			case 1:
-				/* enqueue */ break;
-			case 2:
-				/* dequeue */ break;
-			case 3:
-				/* peek */ break;
-			case 4:
-				/* displayQueue */ break;
-			case 5:
-				/* displayInfo */ break;
-			case 6:
-				System.out.println("Exit Program");
-				running = false;
-				break;
-			default:
-				System.out.println("Invalid Input. Try again.");
+			if (HelpDeskQueue.isEmpty() == true) {
+					System.out.println();
+					System.out.println("Queue is empty");
+			} else {
+				switch (choice) {
+				case 1:
+					/* enqueue */ break;
+				case 2:
+					/* dequeue */ break;
+				case 3:
+					System.out.println();
+					System.out.println("Next Request: " + HelpDeskQueue.peek());
+					System.out.println();
+					break;
+				case 4:
+					System.out.println();
+					HelpDeskQueue.displayQueue();
+					System.out.println();
+					break;
+				case 5:
+					System.out.println();
+					HelpDeskQueue.displayInfo();
+					System.out.println();
+					break;
+				case 6:
+					System.out.println("Exit Program" + "\n");
+					running = false;
+					break;
+				default:
+					System.out.println("Invalid Input. Try again.");
+				}
 			}
 		}
 		sc.close();
