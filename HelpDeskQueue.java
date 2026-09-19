@@ -1,8 +1,6 @@
-package IT_HelpDeskRequest;
 import java.util.Scanner;
 
 public class HelpDeskQueue {
-	// ---------- Queue ----------
 	private static String[] queue = new String[5];
 	private static int front = 0;
 	private static int rear = 0;
@@ -10,22 +8,36 @@ public class HelpDeskQueue {
 
 	// ---------- Required Methods ----------
 	static boolean isEmpty() {
-		// ToDo: implement
-		return false;
+		return size == 0;
 	}
 
 	static boolean isFull() {
-		// ToDo: implement
-		return false;
+		return size == queue.length;
 	}
 
 	static void enqueue(String request) {
-		// ToDo: implement
+		if (isFull()) {
+			System.out.println("Cannot add request.");
+			return;
+		}
+
+		queue[rear] = request;
+		rear = (rear + 1) % queue.length;
+		size++;
+		System.out.println("Request added: " + request);
 	}
 
 	static String dequeue() {
-		// ToDo: implement
-		return null;
+		if (isEmpty()) {
+			System.out.println("Cannot process request.");
+			return null;
+		}
+
+		String request = queue[front];
+		queue[front] = null;
+		front = (front + 1) % queue.length;
+		size--;
+		return request;
 	}
 
 	static String peek() {
@@ -39,7 +51,7 @@ public class HelpDeskQueue {
 	static void displayQueue() {
 		String currentQueue = "";
 
-		for(int i = 0; i < queue.length; i++) {
+		for (int i = 0; i < queue.length; i++) {
 			currentQueue += queue[i];
 			front = (front + 1) % queue.length;
 		}
@@ -52,7 +64,7 @@ public class HelpDeskQueue {
 			System.out.println("Queue is empty");
 		}
 
-		for(int i = 0; i < queue.length; i++) {
+		for (int i = 0; i < queue.length; i++) {
 			System.out.println("No. " + (i + 1) + " in the queue: " + queue[front]);
 			front = (front + 1) % queue.length;
 		}
@@ -69,51 +81,55 @@ public class HelpDeskQueue {
 		System.out.println("================================");
 
 		while (running) {
-			System.out.println(
-				"1. Add Service Request\n" + 	   
-				"2. Process Next Request\n" + 
-				"3. View Next Request\n" + 
-				"4. Display Waiting Requests\n" + 
-				"5. Display Queue Information\n" + 
-				"6. Exit"
-			);
+			System.out.println("1. Add Service Request\n" + "2. Process Next Request\n" + "3. View Next Request\n"
+					+ "4. Display Waiting Requests\n" + "5. Display Queue Information\n" + "6. Exit");
 
 			System.out.print("Enter Option: ");
 			choice = sc.nextInt();
 			sc.nextLine();
 
-			if (HelpDeskQueue.isEmpty() == true) {
-					System.out.println();
-					System.out.println("Queue is empty");
-			} else {
 				switch (choice) {
 				case 1:
-					/* enqueue */ break;
-				case 2:
-					/* dequeue */ break;
-				case 3:
+					System.out.println("----- Add Service Request -----");
+					System.out.print("Enter service request: ");
+					enqueue(sc.nextLine());
 					System.out.println();
-					System.out.println("Next Request: " + HelpDeskQueue.peek());
+					break;
+				case 2:
+					System.out.println("----- Process Next Request -----");
+					String processed = dequeue();
+					if (processed != null) {
+						System.out.println("Processed: " + processed);
+					}
+					System.out.println();
+					break;
+				case 3:
+					System.out.println("----- View Next Request -----");
+					String next = peek();
+					if (next != null) {
+						System.out.println("Next request: " + next);
+					} else {
+						System.out.println("No requests waiting.");
+					}
 					System.out.println();
 					break;
 				case 4:
-					System.out.println();
+					System.out.println("----- Display Waiting Request -----");
 					HelpDeskQueue.displayQueue();
 					System.out.println();
 					break;
 				case 5:
-					System.out.println();
+					System.out.println("----- Display Queue Information -----");
 					HelpDeskQueue.displayInfo();
 					System.out.println();
 					break;
 				case 6:
-					System.out.println("Exit Program" + "\n");
+					System.out.println("----- Exit Program -----");
 					running = false;
 					break;
 				default:
 					System.out.println("Invalid Input. Try again.");
 				}
-			}
 		}
 		sc.close();
 	}
