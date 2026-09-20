@@ -1,3 +1,4 @@
+package IT_HelpDeskRequest;
 import java.util.Scanner;
 
 public class HelpDeskQueue {
@@ -52,7 +53,7 @@ public class HelpDeskQueue {
 		String currentQueue = "";
 
 		for (int i = 0; i < queue.length; i++) {
-			currentQueue += queue[i];
+			currentQueue += (queue[i] + " ");
 			front = (front + 1) % queue.length;
 		}
 
@@ -64,10 +65,9 @@ public class HelpDeskQueue {
 			System.out.println("Queue is empty");
 		}
 
-		for (int i = 0; i < queue.length; i++) {
-			System.out.println("No. " + (i + 1) + " in the queue: " + queue[front]);
-			front = (front + 1) % queue.length;
-		}
+		System.out.println("Size: " + size);
+		System.out.println("Front: " + front);
+		System.out.println("Rear: " + rear);
 	}
 
 	// ---------- Main Class ----------
@@ -81,14 +81,14 @@ public class HelpDeskQueue {
 		System.out.println("================================");
 
 		while (running) {
-			System.out.println("----- Choose Option ----- " + "1. Add Service Request\n" + "2. Process Next Request\n" + "3. View Next Request\n"
+			System.out.println("1. Add Service Request\n" + "2. Process Next Request\n" + "3. View Next Request\n"
 					+ "4. Display Waiting Requests\n" + "5. Display Queue Information\n" + "6. Exit");
 
 			System.out.print("Enter Option: ");
 			choice = sc.nextInt();
 			sc.nextLine();
 
-				switch (choice) {
+			switch (choice) {
 				case 1:
 					System.out.println("----- Add Service Request -----");
 					System.out.print("Enter service request: ");
