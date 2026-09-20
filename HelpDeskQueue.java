@@ -49,11 +49,14 @@ public class HelpDeskQueue {
 	}
 
 	static void displayQueue() {
-		String currentQueue = "";
+		if (isEmpty()) {
+			System.out.println("No waiting requests.");
+			return;
+		}
 
-		for (int i = 0; i < queue.length; i++) {
-			currentQueue += queue[i];
-			front = (front + 1) % queue.length;
+		String currentQueue = "";
+		for (int i = 0; i < size; i++) {
+			currentQueue += queue[(front + i) % queue.length] + " ";
 		}
 
 		System.out.println("Current Requests: " + currentQueue);
@@ -64,10 +67,10 @@ public class HelpDeskQueue {
 			System.out.println("Queue is empty");
 		}
 
-		for (int i = 0; i < queue.length; i++) {
-			System.out.println("No. " + (i + 1) + " in the queue: " + queue[front]);
-			front = (front + 1) % queue.length;
-		}
+		System.out.println("Capacity: " + queue.length);
+		System.out.println("Size: " + size);
+		System.out.println("Front: " + front);
+		System.out.println("Rear: " + rear);
 	}
 
 	// ---------- Main Class ----------
@@ -81,55 +84,56 @@ public class HelpDeskQueue {
 		System.out.println("================================");
 
 		while (running) {
-			System.out.println("----- Choose Option ----- " + "1. Add Service Request\n" + "2. Process Next Request\n" + "3. View Next Request\n"
-					+ "4. Display Waiting Requests\n" + "5. Display Queue Information\n" + "6. Exit");
+			System.out.println("----- Choose Option -----\n" + "1. Add Service Request\n" + "2. Process Next Request\n"
+					+ "3. View Next Request\n" + "4. Display Waiting Requests\n" + "5. Display Queue Information\n"
+					+ "6. Exit");
 
 			System.out.print("Enter Option: ");
 			choice = sc.nextInt();
 			sc.nextLine();
 
-				switch (choice) {
-				case 1:
-					System.out.println("----- Add Service Request -----");
-					System.out.print("Enter service request: ");
-					enqueue(sc.nextLine());
-					System.out.println();
-					break;
-				case 2:
-					System.out.println("----- Process Next Request -----");
-					String processed = dequeue();
-					if (processed != null) {
-						System.out.println("Processed: " + processed);
-					}
-					System.out.println();
-					break;
-				case 3:
-					System.out.println("----- View Next Request -----");
-					String next = peek();
-					if (next != null) {
-						System.out.println("Next request: " + next);
-					} else {
-						System.out.println("No requests waiting.");
-					}
-					System.out.println();
-					break;
-				case 4:
-					System.out.println("----- Display Waiting Request -----");
-					HelpDeskQueue.displayQueue();
-					System.out.println();
-					break;
-				case 5:
-					System.out.println("----- Display Queue Information -----");
-					HelpDeskQueue.displayInfo();
-					System.out.println();
-					break;
-				case 6:
-					System.out.println("----- Exit Program -----");
-					running = false;
-					break;
-				default:
-					System.out.println("Invalid Input. Try again.");
+			switch (choice) {
+			case 1:
+				System.out.println("----- Add Service Request -----");
+				System.out.print("Enter service request: ");
+				enqueue(sc.nextLine());
+				System.out.println();
+				break;
+			case 2:
+				System.out.println("----- Process Next Request -----");
+				String processed = dequeue();
+				if (processed != null) {
+					System.out.println("Processed: " + processed);
 				}
+				System.out.println();
+				break;
+			case 3:
+				System.out.println("----- View Next Request -----");
+				String next = peek();
+				if (next != null) {
+					System.out.println("Next request: " + next);
+				} else {
+					System.out.println("No requests waiting.");
+				}
+				System.out.println();
+				break;
+			case 4:
+				System.out.println("----- Display Waiting Requests -----");
+				HelpDeskQueue.displayQueue();
+				System.out.println();
+				break;
+			case 5:
+				System.out.println("----- Display Queue Information -----");
+				HelpDeskQueue.displayInfo();
+				System.out.println();
+				break;
+			case 6:
+				System.out.println("----- Exit Program -----");
+				running = false;
+				break;
+			default:
+				System.out.println("Invalid Input. Try again.");
+			}
 		}
 		sc.close();
 	}
