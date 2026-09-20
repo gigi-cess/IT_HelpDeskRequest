@@ -57,9 +57,9 @@ public class HelpDeskQueue {
 		String currentQueue = "";
 		for (int i = 0; i < size; i++) {
 			currentQueue += queue[(front + i) % queue.length] + " ";
-		}
 
-		System.out.println("Current Requests: " + currentQueue);
+			System.out.println("Current Requests: " + currentQueue);
+		}
 	}
 
 	static void displayInfo() {
